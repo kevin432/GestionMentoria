@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Palabras Largas</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div>
+                <h1>CUENTO</h1>
+            </div>
+            <div>
+                <p>
+                    {{cuento}}
+                </p>
+            </div>
+        </div>
+        <div>
+            <div><h2>Lista de Palabras</h2></div>
+            <div>
+                <ul>
+                    {% for i in palabaras_grandes %}
+                    <li>
+                        {{i}}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IVA de Inventario</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h2>PRECIOS ORIGINALES</h2>
+        </div>
+        <div>
+            <table>
+                {% for i in precios %}
+                <tr>
+                    {% for j in i  %}
+                    <td>
+                        {{j}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h2>PRECIOS CON IVA</h2>
+        </div>
+        <div>
+            <table>
+                {% for i in precio_iva %}
+                <tr>
+                    {% for j in i  %}
+                    <td>
+                        {{j}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

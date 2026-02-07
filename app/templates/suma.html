@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="HTML Masters" />
+    <style>
+      table {
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      td {
+        border: 1 solid #000;
+        padding: 8px;
+        text-align: center;
+        width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>1. La Matriz de Identidad Dinámica {{n}} * {{n}}</h2>
+    <table>
+      {% for fila in matriz %}
+      <tr>
+        {% for valor in fila %}
+        <td>{{valor}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

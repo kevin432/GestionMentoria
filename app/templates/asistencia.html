@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .P{
+            color: green;
+        }
+
+        .F{
+            color: red;
+        }
+    </style>
+  </head>
+  <body>
+    <table>
+        {%for i in asistencia%}
+        <tr>
+            {%for j in i %}
+            <td class="{%if j == 'P' %} P {% else%} F {%endif%} ">{{j}}</td>
+            {%endfor%}
+        </tr> 
+        {%endfor%}
+    </table>
+  </body>
+</html>

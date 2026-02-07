@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="HTML Masters" />
+    <title>Clean Up</title>
+  </head>
+  <body>
+
+    <h1>CLEAN UP</h1>
+
+    <h2>Datos Originales</h2>
+    <ul>
+      {% for nombre in datos %}
+        <li>{{ nombre }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Datos Limpios</h2>
+    <ul>
+      {% for nombre in datos_limpio %}
+        <li>{{ nombre }}</li>
+      {% endfor %}
+    </ul>
+
+  </body>
+</html>
