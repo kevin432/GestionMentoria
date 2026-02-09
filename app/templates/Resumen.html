@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RESUMEN</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      h3 {
+        color: #2c3e50;
+      }
+      div {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      li:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p>{{cuento}}</p>
+    </div>
+    <div>
+      <div>
+        <h3>Total de palabras</h3>
+        <ul>
+          <li>{{total_palabra}}</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Palabras Únicas. Total: {{unica_palabra_total}}</h3>
+        <ul>
+          {% for i in palabra_unica %}
+            <li>{{i}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h3>Palabras con más de 7 letras. Total: {{palabra_grande_total}}</h3>
+        <ul>
+          {% for i in palabra_grande %}
+            <li>{{i}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

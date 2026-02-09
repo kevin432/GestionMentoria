@@ -10,5 +10,8 @@ def create_app():
     # Importar y registrar controladores (Blueprints)
     from app.controller.practica_chatGPT import practica_chatgpt
     app.register_blueprint(practica_chatgpt)
+    
+    from app.controller.practica_2 import practica_2
+    app.register_blueprint(practica_2)
 
     return app

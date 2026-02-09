@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <style>
+        /* Reset de estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Tarjeta del Producto */
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        /* Área de Imagen */
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        /* Etiqueta de Stock */
+        .stock-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .in-stock {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .low-stock {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* Contenido */
+        .product-info {
+            padding: 24px;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        /* Precio */
+        .price-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .current-price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #2ecc71;
+        }
+
+        .old-price {
+            font-size: 1rem;
+            color: #aaa;
+            text-decoration: line-through;
+        }
+
+        /* Stock Detalle */
+        .stock-detail {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Acciones */
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .buy-btn {
+            background-color: #222;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .buy-btn:hover {
+            background-color: #444;
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: #222;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .secondary-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="product-card">
+        <!-- Imagen y Badge de Stock -->
+        <div class="product-image">
+            <span class="stock-badge in-stock">Disponible</span>
+            <!-- Imagen de ejemplo -->
+            <img src="https://cdn-icons-png.flaticon.com/512/6893/6893901.png" alt="Producto">
+        </div>
+
+        <!-- Información del Producto -->
+        <div class="product-info">
+            <p class="product-category">Electrónica</p>
+            <h1 class="product-name">{{nombre}}</h1>
+            
+            <div class="price-container">
+                <span class="current-price">{{descuento}}</span>
+                <span class="old-price">{{precio}}</span>
+            </div>
+
+            <div class="stock-detail">
+                <span class="dot"></span>
+                <span><strong>Stock:</strong> {{stock}} unidades disponibles</span>
+            </div>
+
+            <!-- Botones -->
+            <div class="product-actions">
+                <button class="buy-btn">Añadir al Carrito</button>
+                <button class="secondary-btn">Guardar en Favoritos</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

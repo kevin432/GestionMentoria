@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IVA</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 50%;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #ddd;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calcular Iva de productos, Iva: {{n}}% , {{iva_n}}</h1>
+    <table>
+      <tr>
+        <th>Precio Original</th>
+        <th>IVA</th>
+        <th>Precio con Iva</th>
+      </tr>
+      {% for i in range(precio|length) %}
+      <tr>
+        
+        <td>{{ precio[i] }}</td>
+        <td>{{ iva_pagar[i] }}</td>
+        <td>{{ precio_iva[i] }}</td>
+        
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

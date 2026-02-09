@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matriz</title>
+  </head>
+  <body>
+    <table>
+      {% for i in matriz_n %}
+      <tr>
+        {% for j in i %}
+        <td>{{j}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
