@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Calificaciones | UE Kevin Alfaro</title>
+    <style>
+        /* Variables de Identidad Institucional */
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado Institucional */
+        .header {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px 16px 0 0;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+        }
+
+        .header-title p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .academic-period {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Contenedor de Tabla Responsivo */
+        .table-responsive {
+            background: var(--white);
+            border-radius: 0 0 16px 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        /* Estilos de Cabecera de Tabla */
+        thead {
+            background-color: #f1f5f9;
+        }
+
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* Estilos de Filas */
+        td {
+            padding: 1rem 1.5rem;
+            font-size: 0.9375rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Estilo para el nombre del estudiante */
+        .student-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        /* Estilo base para las notas */
+        .grade-badge {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            display: inline-block;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        /* Colores dinámicos solicitados */
+        .grade-pass {
+            background: #ecfdf5;
+            color: var(--accent-green);
+            border: 1px solid #d1fae5;
+        }
+
+        .grade-fail {
+            background: #fef2f2;
+            color: var(--accent-red);
+            border: 1px solid #fee2e2;
+        }
+
+        /* Footer de la tabla */
+        .table-footer {
+            padding: 1rem 2rem;
+            background: #fff;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* Mejoras de accesibilidad y visuales */
+        @media (max-width: 640px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-title h1 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Cabecera del Sistema -->
+        <header class="header">
+            <div class="header-title">
+                <h1>Unidad Educativa Kevin Alfaro</h1>
+                <p>Reporte Mensual de Calificaciones Académicas</p>
+            </div>
+            <div class="academic-period">
+                Periodo Lectivo: 2025 - 2026
+            </div>
+        </header>
+
+        <!-- Tabla Principal -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Matemática</th>
+                        <th>Lenguaje</th>
+                        <th>Historia</th>
+                        <th>Física</th>
+                        <th>Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in estudiantes %}
+                    <!-- Obtenemos el promedio de las notas -->
+                    {% set promedio = (i["Matematica"] + i["Lenguaje"] + i["Historia"] + i["Fisica"]) / 4 %}
+                    <tr>
+                        <td class="student-name">
+                            {{ i["Nombre"] }}
+                        </td>
+                        <td>
+                            <span class="grade-badge {{ 'grade-pass' if i['Matematica'] >= 7 else 'grade-fail' }}">
+                                {{ i["Matematica"] }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="grade-badge {{ 'grade-pass' if i['Lenguaje'] >= 7 else 'grade-fail' }}">
+                                {{ i["Lenguaje"] }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="grade-badge {{ 'grade-pass' if i['Historia'] >= 7 else 'grade-fail' }}">
+                                {{ i["Historia"] }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="grade-badge {{ 'grade-pass' if i['Fisica'] >= 7 else 'grade-fail' }}">
+                                {{ i["Fisica"] }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="grade-badge {{ 'grade-pass' if promedio >= 7 else 'grade-fail' }}" style="border-width: 2px;">
+                                <!-- formato para redondear un decimal a 2 decimas -->
+                                {{ "%.2f"|format(promedio) }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                            No hay registros de estudiantes disponibles.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="table-footer">
+                Sistema Automatizado de Gestión Académica © 2025
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

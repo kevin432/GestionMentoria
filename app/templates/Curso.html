@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Cursos | Plataforma Educativa</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #eef2ff;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-gray: #f9fafb;
+            --white: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.025em;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Grid de Cursos */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Tarjeta de Curso */
+        .course-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .course-title-bar {
+            background: var(--white);
+            padding: 1.25rem 1.5rem;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .course-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .course-title-bar h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Lista de Lecciones */
+        .lessons-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lesson-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-item:hover {
+            background-color: #fafafa;
+        }
+
+        .lesson-number {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #f3f4f6;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .lesson-content {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Badge de cantidad */
+        .lesson-count {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Estado vacío */
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            background: var(--white);
+            border-radius: 12px;
+            border: 2px dashed var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Mis Cursos</h1>
+            <p>Explora y continúa con tu aprendizaje hoy</p>
+        </header>
+
+        <main class="courses-grid">
+            {% for nombre_curso, lecciones in cursos.items() %}
+            <article class="course-card">
+                <div class="course-title-bar">
+                    <div class="course-icon">📚</div>
+                    <h2>{{ nombre_curso }}</h2>
+                    <span class="lesson-count">{{ lecciones|length }} módulos</span>
+                </div>
+                
+                <ul class="lessons-list">
+                    {% for leccion in lecciones %}
+                    <li class="lesson-item">
+                        <span class="lesson-number">{{ loop.index }}</span>
+                        <div class="lesson-content">{{ leccion }}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% else %}
+            <div class="no-data">
+                <p>Aún no tienes cursos disponibles en tu cuenta.</p>
+            </div>
+            {% endfor %}
+        </main>
+    </div>
+
+</body>
+</html>

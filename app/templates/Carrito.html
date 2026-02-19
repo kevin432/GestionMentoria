@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras | KevOnline</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-body: #f8fafc;
+            --text-main: #0f172a;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cart-header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Lista de Productos */
+        .products-list {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-item {
+            display: flex;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            flex-shrink: 0;
+        }
+
+        .product-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-info-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .product-price-unit {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .product-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .subtotal-label {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            color: var(--danger);
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            margin-top: 5px;
+        }
+
+        /* Resumen de Compra */
+        .cart-summary {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-checkout {
+            background-color: var(--primary);
+            color: var(--white);
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-checkout:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-continue {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-continue:hover {
+            background-color: var(--primary-light);
+            background-color: #eff6ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+            .cart-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-item {
+                flex-direction: column;
+            }
+            .product-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="cart-header">
+            <span>🛒</span>
+            <h1>Tu Carrito - KevOnline</h1>
+        </header>
+
+        <div class="cart-layout">
+            <!-- Lista de productos -->
+            <section class="products-list">
+                {% for i in productos %}
+                <article class="product-item">
+                    <div class="product-image">
+                        [Imagen de {{ i["producto"] }}]
+                    </div>
+                    
+                    <div class="product-details">
+                        <div class="product-info-top">
+                            <div>
+                                <h2 class="product-name">{{ i["producto"] }}</h2>
+                                <p class="product-price-unit">Precio unitario: ${{ i["precio"] }}</p>
+                                <button class="remove-btn">Eliminar</button>
+                            </div>
+                        </div>
+
+                        <div class="product-controls">
+                            <div class="quantity-selector">
+                                <span>Cant: {{ i["cantidad"] }}</span>
+                            </div>
+                            <div class="subtotal-label">
+                                ${{ i["cantidad"] * i["precio"] }}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% else %}
+                <div style="padding: 3rem; text-align: center; color: var(--text-light);">
+                    <p>Tu carrito está vacío.</p>
+                </div>
+                {% endfor %}
+            </section>
+
+            <!-- Resumen de pago -->
+            {% if productos %}
+            <aside class="cart-summary">
+                <h2 class="summary-title">Resumen de Compra</h2>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>${{ total }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>IVA</span>
+                    <span style="color: var(--success); color: #10b981;">15%</span>
+                </div>
+                
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span>${{ total * 0.15 + total }}</span>
+                </div>
+
+                <button class="btn btn-checkout">Finalizar Compra</button>
+                <a href="#" class="btn btn-continue">Seguir Comprando</a>
+            </aside>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Calificaciones</title>
+    <style>
+      /* Estilos base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      /* Contenedor del Formulario */
+      .form-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 450px;
+      }
+
+      .form-card h2 {
+        color: #2d3748;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .form-card p {
+        color: #718096;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      /* Grupos de Input */
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #4a5568;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+        font-family: inherit;
+      }
+
+      .input-group input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+      }
+
+      /* Botón de envío */
+      .submit-btn {
+        width: 100%;
+        background-color: #4a90e2;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        background-color: #357abd;
+      }
+
+      .submit-btn:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-card">
+      <h2>Registro de Notas</h2>
+      <p>Ingresa la información académica del estudiante.</p>
+
+      <form id="estudianteForm">
+        <!-- Input de Estudiante -->
+        <div class="input-group">
+          <label for="estudiante">Nombre del Estudiante</label>
+          <input
+            type="text"
+            id="estudiante"
+            name="estudiante"
+            placeholder="Ej: Ana García"
+            required
+          />
+        </div>
+
+        <!-- Input de Materia -->
+        <div class="input-group">
+          <label for="materia">Materia</label>
+          <input
+            type="text"
+            id="materia"
+            name="materia"
+            placeholder="Ej: Matemáticas"
+            required
+          />
+        </div>
+
+        <!-- Input de Nota -->
+        <div class="input-group">
+          <label for="nota">Nota Final</label>
+          <input
+            type="number"
+            id="nota"
+            name="nota"
+            step="0.1"
+            min="0"
+            max="10"
+            placeholder="0.0 - 10.0"
+            required
+          />
+        </div>
+
+        <!-- Botón -->
+        <button type="submit" class="submit-btn">Guardar Calificación</button>
+      </form>
+    </div>
+  </body>
+  <script src="{{ url_for('static', filename='js/public/jquery-4.0.0.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/notas.js') }}"></script>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provincias de Ecuador | Explorador</title>
+    <style>
+        :root {
+            --ecuador-yellow: #FFD700;
+            --ecuador-blue: #0033A0;
+            --ecuador-red: #ED1C24;
+            --bg-gray: #f4f7f6;
+            --text-dark: #2d3436;
+            --white: #ffffff;
+            --primary: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Franja decorativa superior */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, var(--ecuador-yellow) 33.3%, var(--ecuador-blue) 33.3%, var(--ecuador-blue) 66.6%, var(--ecuador-red) 66.6%);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .description {
+            color: #636e72;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .select-wrapper {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b2bec3;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid #dfe6e9;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #edf2f7;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: #b2bec3;
+            margin-bottom: 5px;
+        }
+
+        #pro {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        #pro:empty::before {
+            content: "Selecciona una provincia";
+            font-size: 1rem;
+            font-weight: 400;
+            color: #b2bec3;
+        }
+
+        /* Icono decorativo */
+        .icon-map {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <span class="icon-map">🇪🇨</span>
+        <h1>Ecuador</h1>
+        <p class="description">Selecciona una provincia para ver el detalle.</p>
+
+        <div class="select-wrapper">
+            <label for="provincia">Provincia</label>
+            <select id="provincia">
+                <option value="" disabled selected>Escoge una opción...</option>
+                {% for i in provincias_ecuador %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="result-box">
+            <span class="result-label">Has seleccionado:</span>
+            <p id="pro"></p>
+        </div>
+    </div>
+
+    <script>
+        function inicializarSelector() {
+            const select = document.getElementById("provincia");
+            const parra = document.getElementById("pro");
+
+            select.addEventListener("change", function() {
+                // Animación simple de actualización
+                parra.style.opacity = 0;
+                setTimeout(() => {
+                    parra.textContent = this.value;
+                    parra.style.opacity = 1;
+                }, 150);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", inicializarSelector);
+    </script>
+</body>
+</html>

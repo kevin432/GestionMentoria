@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Diccionario - Usuarios</title>
+    <style>
+        /* Estilos modernos y limpios */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            border-top: 5px solid #4facfe;
+        }
+
+        .card-high-age {
+            border-top-color: #ff6b6b; /* Color diferente para mayores de 21 */
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            background: #fdfdfd;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .user-age {
+            background: #ebf4ff;
+            color: #3182ce;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .card-high-age .user-age {
+            background: #fff5f5;
+            color: #e53e3e;
+        }
+
+        /* Mensaje si no hay datos */
+        .empty-msg {
+            color: #a0aec0;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sección de todos los usuarios -->
+        <div class="card">
+            <h1>👥 Todos los usuarios</h1>
+            <ul>
+                {% for i in usuarios %}
+                <li>
+                    <span class="user-name">{{ i['nombre'] }}</span>
+                    <span class="user-age">{{ i['edad'] }} años</span>
+                </li>
+                {% else %}
+                <p class="empty-msg">No hay usuarios registrados.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Sección de usuarios mayores a 21 -->
+        <div class="card card-high-age">
+            <h1>🚀 Mayores a 21 años</h1>
+            <ul>
+                {% for i in edad_usu %}
+                <li>
+                    <span class="user-name">{{ i['nombre'] }}</span>
+                    <span class="user-age">{{ i['edad'] }} años</span>
+                </li>
+                {% else %}
+                <p class="empty-msg">No hay usuarios en este rango.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
