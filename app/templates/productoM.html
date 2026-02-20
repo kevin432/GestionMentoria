@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario de Productos | Panel de Gestión</title>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text-dark: #1e293b;
+        --text-light: #64748b;
+        --success: #10b981;
+        --danger: #ef4444;
+        --border: #e2e8f0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg);
+        color: var(--text-dark);
+        line-height: 1.5;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* Encabezado */
+      header {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 1.875rem;
+        font-weight: 800;
+        color: var(--text-dark);
+      }
+
+      /* Formulario Estilo Card */
+      .form-card {
+        background: var(--card);
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        margin-bottom: 2.5rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-light);
+        letter-spacing: 0.025em;
+      }
+
+      input {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        outline: none;
+        background: #fdfdfd;
+      }
+
+      input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        background: white;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.875rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      button:hover:not(:disabled) {
+        background-color: var(--primary-dark);
+      }
+
+      button:disabled {
+        background-color: var(--border);
+        color: var(--text-light);
+        cursor: not-allowed;
+      }
+
+      /* Tabla de Productos */
+      .table-container {
+        background: var(--card);
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      thead {
+        background-color: #f1f5f9;
+      }
+
+      th {
+        padding: 1rem 1.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-light);
+        border-bottom: 1px solid var(--border);
+      }
+
+      td {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9375rem;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:hover {
+        background-color: #f8fafc;
+      }
+
+      .price-tag {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .stock-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .in-stock {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .no-stock {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .empty-state {
+        padding: 3rem;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      @media (max-width: 640px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Gestión de Inventario</h1>
+      </header>
+
+      <!-- Sección de Registro -->
+      <div class="form-card">
+        <h2 style="font-size: 1.125rem; margin-bottom: 1.25rem">
+          Registrar Nuevo Producto
+        </h2>
+        <form method="POST">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nombre">Nombre del Producto</label>
+              <input
+                type="text"
+                name="nombre"
+                id="nombre"
+                placeholder="Ej: Monitor 4K"
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio (USD)</label>
+              <input
+                type="number"
+                step="0.01"
+                id="precio"
+                name="precio"
+                placeholder="0.00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="stock">Stock Inicial</label>
+              <input
+                type="number"
+                min="0"
+                id="stock"
+                name="stock"
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <button id="btnG" disabled>
+            <svg
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              ></path>
+            </svg>
+            Añadir al Inventario
+          </button>
+        </form>
+      </div>
+
+      <!-- Tabla de Resultados -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in productos %}
+            <tr>
+              <td style="font-weight: 500">{{ i.nombre }}</td>
+              <td class="price-tag">${{ i.precio }}</td>
+              <td>{{ i.stock }} u.</td>
+              <td>
+                {% if i.stock | int > 0 %}
+                <span class="stock-badge in-stock">Disponible</span>
+                {% else %}
+                <span class="stock-badge no-stock">Agotado</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="empty-state">
+                <p>No hay productos en el inventario actualmente.</p>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const formNombre = document.getElementById("nombre");
+        const formPrecio = document.getElementById("precio");
+        const formStock = document.getElementById("stock");
+        const formBtn = document.getElementById("btnG");
+
+        function validar() {
+          const nombre = formNombre.value.trim();
+          const precio = formPrecio.value.trim();
+          const stock = formStock.value.trim();
+
+          // Habilitar solo si todos los campos tienen datos válidos
+          const esValido =
+            nombre.length > 0 &&
+            precio !== "" &&
+            parseFloat(precio) >= 0 &&
+            stock !== "" &&
+            parseInt(stock) >= 0;
+
+          formBtn.disabled = !esValido;
+        }
+
+        // Escuchar cambios en tiempo real
+        [formNombre, formPrecio, formStock].forEach((input) => {
+          input.addEventListener("input", validar);
+        });
+
+        validar();
+      });
+    </script>
+  </body>
+</html>

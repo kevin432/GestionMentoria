@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calcular Edad | Estilo Netflix</title>
+    <style>
+        :root {
+            --nflx-red: #e50914;
+            --nflx-red-hover: #f40612;
+            --nflx-black: #000000;
+            --nflx-dark-grey: #141414;
+            --nflx-input: #333333;
+            --text-white: #ffffff;
+            --text-grey: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--nflx-black);
+            background-image: radial-gradient(circle at center, #221f1f 0%, #000000 100%);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.75);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px 60px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-grey);
+            margin-bottom: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--nflx-input);
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 4px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        input[type="number"]:focus, select:focus {
+            background: #454545;
+            border-bottom-color: #e87c03;
+        }
+
+        select:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--nflx-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: var(--nflx-red-hover);
+        }
+
+        button:disabled {
+            background-color: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        /* Área de Resultado Estilo Info de Serie */
+        .resultado-card {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: left;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .resultado-card h2 {
+            font-size: 1.1rem;
+            color: var(--text-grey);
+            margin-bottom: 12px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: #333;
+            padding: 4px 8px;
+            border: 1px solid #666;
+            border-radius: 2px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .match-score {
+            color: #46d369;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Quitar flechas de input number */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calcular Edad</h1>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="anio">AÑO DE NACIMIENTO</label>
+                <input type="number" id="anio" name="anio" placeholder="yyyy" required />
+            </div>
+
+            <div class="form-group">
+                <label for="mes">MES</label>
+                <select id="mes" name="mes">
+                    <option value="">Seleccione un mes</option>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dia">DÍA</label>
+                <select id="dia" name="dia" disabled>
+                    <option value="">Seleccione un día</option>
+                </select>
+            </div>
+
+            <button type="submit" id="btn" disabled>Calcular Edad</button>
+        </form>
+
+        {% if edad_anio is defined %}
+        <div class="resultado-card" id="resultado">
+            <span class="match-score">98% de coincidencia</span>
+            <h2>Resumen del Perfil:</h2>
+            <div class="stats-container">
+                <span class="stat-badge">{{ edad_anio }} Años</span>
+                <span class="stat-badge">{{ edad_mes }} Meses</span>
+                <span class="stat-badge">{{ edad_dia }} Días</span>
+                <span class="stat-badge">HD</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputAnio = document.getElementById("anio");
+            const selectMes = document.getElementById("mes");
+            const selectDia = document.getElementById("dia");
+            const btnCalcular = document.getElementById("btn");
+
+            function getAnioActual() {
+                return new Date().getFullYear();
+            }
+
+            const currentYear = getAnioActual();
+            inputAnio.max = currentYear;
+            inputAnio.min = currentYear - 120;
+
+            function validar() {
+                const anio = inputAnio.value.trim();
+                const mes = selectMes.value;
+                const dia = selectDia.value;
+
+                const isValidYear = anio !== "" && parseInt(anio) <= currentYear && parseInt(anio) >= (currentYear - 120);
+
+                if (!isValidYear || mes === "" || dia === "") {
+                    btnCalcular.disabled = true;
+                } else {
+                    btnCalcular.disabled = false;
+                }
+            }
+
+            function generarDias() {
+                selectMes.addEventListener("change", function () {
+                    const mesSeleccionado = parseInt(this.value);
+                    const anioSeleccionado = parseInt(inputAnio.value) || currentYear;
+
+                    selectDia.innerHTML = '<option value="">Seleccione un día</option>';
+
+                    if (mesSeleccionado) {
+                        selectDia.disabled = false;
+                        // Usar el año ingresado para contemplar bisiestos en Febrero
+                        const diasDelMes = new Date(anioSeleccionado, mesSeleccionado, 0).getDate();
+
+                        for (let i = 1; i <= diasDelMes; i++) {
+                            const option = document.createElement("option");
+                            option.value = i;
+                            option.textContent = i;
+                            selectDia.appendChild(option);
+                        }
+                    } else {
+                        selectDia.disabled = true;
+                    }
+                    validar();
+                });
+            }
+
+            inputAnio.addEventListener("input", validar);
+            selectDia.addEventListener("change", validar);
+
+            generarDias();
+            validar();
+        });
+    </script>
+
+</body>
+</html>

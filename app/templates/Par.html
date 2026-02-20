@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de Números | Par o Impar</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            background: var(--card);
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .icon-header {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            letter-spacing: -0.025em;
+        }
+
+        p.description {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            outline: none;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Área de Resultado */
+        .result-area {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .result-par {
+            background-color: #ecfdf5;
+            color: var(--success);
+            border: 1px solid #a7f3d0;
+        }
+
+        .result-impar {
+            background-color: #fffbeb;
+            color: var(--warning);
+            border: 1px solid #fde68a;
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <span class="icon-header">🔢</span>
+        <h1>¿Par o Impar?</h1>
+        <p class="description">Introduce un número entero para analizar su naturaleza.</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="num">Número a evaluar</label>
+                <input id="num" type="number" name="numero" placeholder="Ej: 42" required autocomplete="off" />
+            </div>
+            
+            <button id="btn" type="submit">
+                <span>Verificar Ahora</span>
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </button>
+        </form>
+
+        {% if par %}
+        <div class="result-area {{ 'result-par' if 'PAR' in par.upper() else 'result-impar' }}">
+            <p style="font-size: 0.8rem; margin-bottom: 0.25rem;">Resultado del análisis:</p>
+            <p class="result-value">{{ par }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const numInput = document.getElementById("num");
+            const submitBtn = document.getElementById("btn");
+
+            function validar() {
+                // Habilitar solo si el valor no está vacío
+                if (numInput.value.trim() === "") {
+                    submitBtn.disabled = true;
+                } else {
+                    submitBtn.disabled = false;
+                }
+            }
+
+            // Inicializar validación
+            validar();
+
+            // Escuchar cambios
+            numInput.addEventListener("input", validar);
+        });
+    </script>
+</body>
+</html>

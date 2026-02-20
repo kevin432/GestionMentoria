@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Edad | Estilo Dark</title>
+    <style>
+        :root {
+            --primary: #818cf8;
+            --primary-hover: #6366f1;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --text-white: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            background: var(--card-dark);
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+        }
+
+        .icon-header {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.description {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            margin-left: 0.25rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: #0f172a;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 1.25rem;
+            color: white;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background-color: #1e293b;
+        }
+
+        /* Eliminar flechas de input number */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        }
+
+        button:disabled {
+            background-color: #334155;
+            color: #64748b;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Resultado */
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px dashed var(--primary);
+            border-radius: 16px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .result-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <span class="icon-header">🎂</span>
+        <h1>Calcular Edad</h1>
+        <p class="description">Descubre cuántos años tienes ingresando tu año de nacimiento.</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="anio">Año de Nacimiento</label>
+                <input type="number" id="anio" name="anio" placeholder="Ej: 1995" required autocomplete="off" />
+            </div>
+            
+            <button type="submit" id="btn">
+                <span>Calcular Edad</span>
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7l6 6-6 6"></path></svg>
+            </button>
+        </form>
+
+        {% if edad %}
+        <div class="result-box">
+            <p class="result-text">Tu edad actual es:</p>
+            <p class="result-value">{{ edad }} años</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputAnio = document.getElementById("anio");
+            const btnCalcular = document.getElementById("btn");
+
+            // Función para obtener el año actual
+            function getAnioActual() {
+                return new Date().getFullYear();
+            }
+
+            // Configuración inicial de límites
+            const currentYear = getAnioActual();
+            inputAnio.max = currentYear;
+            inputAnio.min = currentYear - 120; // Límite razonable de 120 años
+
+            function validar() {
+                const valor = inputAnio.value.trim();
+                // Habilitar si no está vacío y es un año coherente
+                if (valor === "" || parseInt(valor) > currentYear || parseInt(valor) < (currentYear - 120)) {
+                    btnCalcular.disabled = true;
+                } else {
+                    btnCalcular.disabled = false;
+                }
+            }
+
+            // Validar al escribir
+            inputAnio.addEventListener("input", validar);
+            
+            // Validación inicial
+            validar();
+        });
+    </script>
+</body>
+</html>
